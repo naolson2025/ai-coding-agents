@@ -16,8 +16,8 @@
     "typecheck": "tsc --noEmit",
     "test": "bun run create:test:db && bun test && bun run destory:test:db",
     "lint": "eslint \"server/**/*.ts\" \"scripts/**/*.ts\" --fix",
-    "format": "prettier --write \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yml\" \"**/*.yaml\"",
-    "format:check": "prettier --check \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yml\" \"**/*.yaml\""
+    "format": "prettier --write \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yaml\"",
+    "format:check": "prettier --check \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yaml\""
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.2",
