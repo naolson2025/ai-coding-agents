@@ -24,12 +24,18 @@ const getDbConn = () => {
   if (
     !dbClient &&
     process.env.APP_ENV !== 'development' &&
-    process.env.APP_ENV !== 'production'
+    process.env.APP_ENV !== 'production' &&
+    process.env.APP_ENV !== 'test'
   ) {
-    throw new Error('APP_ENV must be either "development" or "production"');
+    throw new Error(
+      'APP_ENV must be either "development", "test" or "production"'
+    );
   }
 
-  if (!dbClient && process.env.APP_ENV === 'development') {
+  if (
+    !dbClient &&
+    (process.env.APP_ENV === 'development' || process.env.APP_ENV === 'test')
+  ) {
     dbClient = drizzle(process.env.DATABASE_URL);
   }
 

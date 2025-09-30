@@ -3,15 +3,13 @@ import app from '../index';
 import { reset } from 'drizzle-seed';
 import * as schema from '../db/schema';
 import { db } from '../db/db';
-import { User } from '../types';
+import { User, Todo } from '../types';
 import { insertTodo } from '../db/queries';
 
 let testUser: User;
 let sessionCookie: string;
 
 beforeEach(async () => {
-  await reset(db, schema);
-
   const email = 'test@example.com';
   const password = 'password123';
 
@@ -56,7 +54,7 @@ describe('Todo Routes', () => {
       expect(res.status).toBe(200);
       expect(todos).toBeInstanceOf(Array);
       expect(todos.length).toBe(2);
-      expect(todos.map((t) => t.title)).toEqual(
+      expect(todos.map((t: Todo) => t.title)).toEqual(
         expect.arrayContaining(['Todo 1', 'Todo 2'])
       );
     });
