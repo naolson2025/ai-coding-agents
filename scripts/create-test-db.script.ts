@@ -5,7 +5,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import * as schema from '../server/db/schema';
 
-// @ts-ignore
+// @ts-expect-error import.meta is fine
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const adminDbUrl = `postgres://user:password@localhost:5432/postgres`;

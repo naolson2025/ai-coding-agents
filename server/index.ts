@@ -7,7 +7,7 @@ import { logger } from 'hono/logger';
 const app = new Hono();
 
 if (process.env.APP_ENV !== 'test') {
-  app.use(logger())
+  app.use(logger());
 }
 
 const router = app

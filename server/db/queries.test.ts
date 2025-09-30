@@ -18,7 +18,6 @@ afterEach(async () => {
   await reset(db, schema);
 });
 
-
 const getUser = async () => {
   const [users] = await db.select().from(schema.user).limit(1);
   return users;
