@@ -4,6 +4,7 @@ import { auth } from './lib/auth';
 
 export type Todo = InferSelectModel<typeof todos>;
 export type NewTodo = InferInsertModel<typeof todos>;
+export type User = typeof auth.$Infer.Session.user;
 
 export type HonoEnv = {
   Variables: {

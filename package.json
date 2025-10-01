@@ -1,9 +1,8 @@
 {
   "name": "test-hono-rpc-better-auth",
+  "type": "module",
   "scripts": {
-    "client": "cd client && bun run dev",
-    "server": "bun run --hot server/index.ts",
-    "dev": "concurrently \"bun run server\" \"bun run client\"",
+    "dev": "bun run --hot server/index.ts",
     "db:up": "docker compose up -d",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
@@ -12,20 +11,26 @@
     "create:test:db": "bun run ./scripts/create-test-db.script.ts",
     "destory:test:db": "bun run ./scripts/destroy-test-db.script.ts",
     "open-auth-docs": "open-cli http://localhost:3000/api/auth/reference",
-    "build": "bun build ./server/index.ts --outdir ./dist/server --target bun && cd client && bun run build",
-    "start": "bun run ./dist/server/index.js",
-    "docker:build": "docker build -t hono-todo-app .",
-    "docker:run": "docker run -p 3000:3000 --env-file .env -e DATABASE_URL='postgresql://user:password@host.docker.internal:5432/todos' hono-todo-app",
+    "build": "bun build ./server/index.ts --outdir ./dist --target bun",
+    "start": "bun run ./dist/index.js",
     "typecheck": "tsc --noEmit",
-    "test": "bun run create:test:db && bun test && bun run destory:test:db"
+    "test": "bun run create:test:db && bun test && bun run destory:test:db",
+    "lint": "eslint \"server/**/*.ts\" \"scripts/**/*.ts\" --fix",
+    "format": "prettier --write \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yaml\"",
+    "format:check": "prettier --check \"server/**/*.ts\" \"scripts/**/*.ts\" \"**/*.yaml\""
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.2",
     "@neondatabase/serverless": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
     "better-auth": "^1.3.4",
     "drizzle-orm": "^0.44.5",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
     "hono": "^4.8.12",
     "pg": "^8.16.3",
+    "prettier": "^3.6.2",
     "ws": "^8.18.3"
   },
   "devDependencies": {
