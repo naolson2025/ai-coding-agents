@@ -6,7 +6,7 @@ import {
   updateTodoById,
 } from './queries';
 import { NewTodo } from '../types';
-import { reset, seed } from 'drizzle-seed';
+import { seed } from 'drizzle-seed';
 import * as schema from '@/db/schema';
 import { db } from '@/db/db';
 
@@ -14,8 +14,20 @@ beforeEach(async () => {
   await seed(db, schema);
 });
 
+// Use custom reset bc drizzle-seed reset
+// wasn't working on Windows
+const tables = Object.values(schema);
+
+const reset = async () => {
+  const promises = tables.map(async (table) => {
+    return db.delete(table);
+  });
+
+  await Promise.all(promises);
+};
+
 afterEach(async () => {
-  await reset(db, schema);
+  await reset();
 });
 
 const getUser = async () => {
