@@ -14,7 +14,6 @@ The basic folder structure is as follows:
   - `db/`: Database-related files, such as schema and migrations.
   - `routes/`: API route definitions.
   - `lib/`: Shared libraries and utility functions.
-- `test/`: Contains end-to-end (E2E) tests for the application.
 - `drizzle/`: Drizzle ORM configuration and generated files.
 
 ## Getting Started
@@ -79,5 +78,4 @@ To set up the development environment, follow these steps:
 
 ### Test Organization
 
-- Unit tests should be co-located with the application code they are testing. For example, the tests for `src/routes/users.ts` should be in `src/routes/users.test.ts`.
-- Place E2E tests in the `test/` directory.
+- Unit tests & e2e tests should be co-located with the application code they are testing. For example, the tests for `src/routes/users.ts` should be in `src/routes/users.test.ts`.
