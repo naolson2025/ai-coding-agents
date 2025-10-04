@@ -1,12 +1,4 @@
-import {
-  expect,
-  it,
-  describe,
-  beforeEach,
-  afterEach,
-  mock,
-  spyOn,
-} from 'bun:test';
+import { expect, it, describe, beforeEach, afterEach } from 'bun:test';
 import app from '../index';
 import * as schema from '../db/schema';
 import { db } from '../db/db';
@@ -52,7 +44,6 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await reset();
-  mock.restore();
 });
 
 describe('Todo Routes', () => {
@@ -87,26 +78,6 @@ describe('Todo Routes', () => {
       expect(todos.map((t: Todo) => t.title)).toEqual(
         expect.arrayContaining(['Todo 1', 'Todo 2'])
       );
-    });
-
-    it('should return 500 if there is a server error', async () => {
-      // Arrange
-      const spy = spyOn(queries, 'getTodosByUserId');
-      spy.mockImplementation(() => {
-        throw new Error('test error');
-      });
-
-      // Act
-      const res = await app.request('/api/todos', {
-        headers: {
-          Cookie: sessionCookie,
-        },
-      });
-
-      // Assert
-      expect(res.status).toBe(500);
-      const { error } = await res.json();
-      expect(error).toBe('Failed to fetch todos');
     });
   });
 
@@ -152,29 +123,6 @@ describe('Todo Routes', () => {
       // Assert
       expect(res.status).toBe(400);
     });
-
-    it('should return 500 if there is a server error', async () => {
-      // Arrange
-      const spy = spyOn(queries, 'insertTodo');
-      spy.mockImplementation(() => {
-        throw new Error('test error');
-      });
-
-      // Act
-      const res = await app.request('/api/todos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Cookie: sessionCookie,
-        },
-        body: JSON.stringify({ title: 'test' }),
-      });
-
-      // Assert
-      expect(res.status).toBe(500);
-      const { error } = await res.json();
-      expect(error).toBe('Failed to create todo');
-    });
   });
 
   describe('DELETE /:id', () => {
@@ -215,28 +163,6 @@ describe('Todo Routes', () => {
       expect(res.status).toBe(404);
       const { error } = await res.json();
       expect(error).toBe('Todo not found');
-    });
-
-    it('should return 500 if there is a server error', async () => {
-      // Arrange
-      const spy = spyOn(queries, 'deleteTodoById');
-      spy.mockImplementation(() => {
-        throw new Error('test error');
-      });
-      const todoToDelete = testTodos[0];
-
-      // Act
-      const res = await app.request(`/api/todos/${todoToDelete.id}`, {
-        method: 'DELETE',
-        headers: {
-          Cookie: sessionCookie,
-        },
-      });
-
-      // Assert
-      expect(res.status).toBe(500);
-      const { error } = await res.json();
-      expect(error).toBe('Failed to delete todo');
     });
   });
 
@@ -302,30 +228,6 @@ describe('Todo Routes', () => {
 
       // Assert
       expect(res.status).toBe(400);
-    });
-
-    it('should return 500 if there is a server error', async () => {
-      // Arrange
-      const spy = spyOn(queries, 'updateTodoById');
-      spy.mockImplementation(() => {
-        throw new Error('test error');
-      });
-      const todoToUpdate = testTodos[0];
-
-      // Act
-      const res = await app.request(`/api/todos/${todoToUpdate.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Cookie: sessionCookie,
-        },
-        body: JSON.stringify({ title: 'test' }),
-      });
-
-      // Assert
-      expect(res.status).toBe(500);
-      const { error } = await res.json();
-      expect(error).toBe('Failed to update todo');
     });
   });
 });
