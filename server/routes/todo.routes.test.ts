@@ -1,10 +1,21 @@
 import { expect, it, describe, beforeEach, afterEach } from 'bun:test';
 import app from '../index';
-import { reset } from 'drizzle-seed';
 import * as schema from '../db/schema';
 import { db } from '../db/db';
 import { User, Todo } from '../types';
 import { insertTodo } from '../db/queries';
+
+// Use custom reset bc drizzle-seed reset
+// wasn't working on Windows
+const tables = Object.values(schema);
+
+const reset = async () => {
+  const promises = tables.map(async (table) => {
+    return db.delete(table);
+  });
+
+  await Promise.all(promises);
+};
 
 let testUser: User;
 let sessionCookie: string;
@@ -31,7 +42,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await reset(db, schema);
+  await reset();
 });
 
 describe('Todo Routes', () => {
