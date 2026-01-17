@@ -37,6 +37,7 @@ const getDbConn = () => {
     (process.env.APP_ENV === 'development' || process.env.APP_ENV === 'test')
   ) {
     dbClient = drizzle(process.env.DATABASE_URL);
+    console.log('connected to local db: ', process.env.DATABASE_URL)
   }
 
   if (!dbClient && process.env.APP_ENV === 'production') {
