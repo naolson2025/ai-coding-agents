@@ -10,6 +10,7 @@
     "db:seed": "bun run ./scripts/seed-local-db.script.ts",
     "open-auth-docs": "open-cli http://localhost:3000/api/auth/reference",
     "build": "bun build ./server/index.ts --outdir ./dist --target bun",
+    "build:single-file": "bun build ./server/index.ts --compile --outfile app",
     "start": "bun run ./dist/index.js",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
